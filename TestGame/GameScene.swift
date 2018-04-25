@@ -24,8 +24,8 @@ class GameScene: SKScene {
         // Get label node from scene and store it for use later
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
+            //label.alpha = 0.0
+            //label.run(SKAction.fadeIn(withDuration: 2.0))
         }
         
         // Create shape node to use during mouse interaction
@@ -66,9 +66,9 @@ class GameScene: SKScene {
     }
     
     func touchMoved(toPoint pos : CGPoint){
-        if let testSpriteNode = self.testSpriteNode {
+        /*if let testSpriteNode = self.testSpriteNode {
             testSpriteNode.position = pos
-        }
+        }*/
     }
     
     func touchUp(atPoint pos : CGPoint) {
