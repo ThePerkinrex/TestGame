@@ -13,7 +13,7 @@ class GameScene: SKScene {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
-    private var testSpriteNode : SKSpriteNode?
+    private var buttonStart : Button?
     
     override func didMove(to view: SKView) {
         // Init tracking area
@@ -21,11 +21,12 @@ class GameScene: SKScene {
         let trackingArea = NSTrackingArea(rect:view.frame,options:options,owner:self,userInfo:nil)
         view.addTrackingArea(trackingArea)
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            //label.alpha = 0.0
-            //label.run(SKAction.fadeIn(withDuration: 2.0))
+        
+        self.buttonStart = childNode(withName: "Menu/StartBtn") as! Button?
+        
+        if let btnStart = self.buttonStart {
+            print(view.frame, self.position)
+            view.addTrackingArea(btnStart.getHoverTrackingArea())
         }
         
         // Create shape node to use during mouse interaction
@@ -39,12 +40,6 @@ class GameScene: SKScene {
             spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
                                               SKAction.fadeOut(withDuration: 0.5),
                                               SKAction.removeFromParent()]))
-        }
-        
-        self.testSpriteNode = SKSpriteNode(imageNamed: "Sprite");
-        if let testSpriteNode = self.testSpriteNode {
-            testSpriteNode.scale(to: CGSize(width: 100, height: 100))
-            self.addChild(testSpriteNode)
         }
     }
     
@@ -66,9 +61,6 @@ class GameScene: SKScene {
     }
     
     func touchMoved(toPoint pos : CGPoint){
-        /*if let testSpriteNode = self.testSpriteNode {
-            testSpriteNode.position = pos
-        }*/
     }
     
     func touchUp(atPoint pos : CGPoint) {
@@ -96,21 +88,11 @@ class GameScene: SKScene {
     }
     
     override func keyDown(with event: NSEvent) {
-        switch event.keyCode {
-        case 0x31:
-            if let label = self.label {
-                label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-            }
-        default:
-            print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
-        }
+        print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
     }
     
     
     override func update(_ currentTime: TimeInterval) {
-        /*if let testSpriteNode = self.testSpriteNode {
-            //testSpriteNode.scale(to: CGSize(width: testSpriteNode.size.width + 1, height: testSpriteNode.size.height + 1))
-        }*/
     }
     
     override func willMove(from view: SKView) {
