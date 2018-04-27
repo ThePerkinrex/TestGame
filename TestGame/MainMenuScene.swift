@@ -11,9 +11,10 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    private final let buttonsInScene = ["Menu/StartBtn", "Menu/LoadBtn"]
+    
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
-    private var buttonStart : Button?
     
     override func didMove(to view: SKView) {
         // Init tracking area
@@ -21,13 +22,8 @@ class GameScene: SKScene {
         let trackingArea = NSTrackingArea(rect:view.frame,options:options,owner:self,userInfo:nil)
         view.addTrackingArea(trackingArea)
         
-        
-        self.buttonStart = childNode(withName: "Menu/StartBtn") as! Button?
-        
-        if let btnStart = self.buttonStart {
-            print(view.frame, self.position)
-            view.addTrackingArea(btnStart.getHoverTrackingArea())
-        }
+        // Load buttons
+        loadButtons()
         
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05
@@ -37,9 +33,7 @@ class GameScene: SKScene {
             spinnyNode.lineWidth = 2.5
             
             spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
+            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5), SKAction.fadeOut(withDuration: 0.5), SKAction.removeFromParent()]))
         }
     }
     
@@ -98,6 +92,19 @@ class GameScene: SKScene {
     override func willMove(from view: SKView) {
         for trackingArea in view.trackingAreas {
             view.removeTrackingArea(trackingArea)
+        }
+    }
+    
+    func loadButtons(){
+        for btnName in buttonsInScene{
+            if let btn = self.childNode(withName: btnName) as? Button {
+                btn.setHoverTrackingArea()
+            }
+        }
+        if let btn = self.childNode(withName: "Menu/StartBtn") as? Button {
+            btn.setClickFunction {
+                print("Start click")
+            }
         }
         
     }
