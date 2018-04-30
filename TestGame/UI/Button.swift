@@ -37,13 +37,13 @@ class Button: SKSpriteNode{
         
         // Get the colors
         if let hoverColorString = userData?.value(forKey: "hoverColor") as? String{
-            self.hoverColor = getColorFrom(string: hoverColorString)
+            self.hoverColor = Button.getColorFrom(string: hoverColorString)
         }else{
             hoverColor = color.copy() as? NSColor
         }
         
         if let pressColorString = userData?.value(forKey: "pressColor") as? String{
-            self.pressColor = getColorFrom(string: pressColorString)
+            self.pressColor = Button.getColorFrom(string: pressColorString)
         }else{
             pressColor = color.copy() as? NSColor
         }
@@ -91,7 +91,9 @@ class Button: SKSpriteNode{
         }
     }
     
-    func getColorFrom(string val : String) -> NSColor{
+    override func keyDown(with event: NSEvent) {}
+    
+    static func getColorFrom(string val : String) -> NSColor{
         let colorList = val.split(separator: ",")
         
         let r = NSColor(red: CGFloat((colorList[0] as NSString).floatValue / 255), green: CGFloat((colorList[1] as NSString).floatValue / 255), blue: CGFloat((colorList[2] as NSString).floatValue / 255), alpha: CGFloat((colorList[3] as NSString).floatValue))

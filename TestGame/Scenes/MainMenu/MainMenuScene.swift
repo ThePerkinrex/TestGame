@@ -9,21 +9,27 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
-    
-    private final let buttonsInScene = ["Menu/StartBtn", "Menu/LoadBtn"]
+class MainMenuScene: PScene{
+    override func sceneUpdate(_ currentTime: TimeInterval) {}
+    private let buttonsInScene = ["Menu/StartBtn", "Menu/LoadBtn"]
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
     override func didMove(to view: SKView) {
+        
         // Init tracking area
         let options = [NSTrackingArea.Options.mouseMoved, NSTrackingArea.Options.activeInKeyWindow] as NSTrackingArea.Options
         let trackingArea = NSTrackingArea(rect:view.frame,options:options,owner:self,userInfo:nil)
         view.addTrackingArea(trackingArea)
         
         // Load buttons
-        loadButtons()
+        loadButtons(inScene: buttonsInScene)
+        if let btn = self.childNode(withName: "Menu/StartBtn") as? Button {
+            btn.setClickFunction {
+                self.changeToScene(fileNamed: "NewGame")
+            }
+        }
         
         // Create shape node to use during mouse interaction
         let w = (self.size.width + self.size.height) * 0.05
@@ -79,33 +85,5 @@ class GameScene: SKScene {
     
     override func mouseUp(with event: NSEvent) {
         self.touchUp(atPoint: event.location(in: self))
-    }
-    
-    override func keyDown(with event: NSEvent) {
-        print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-    }
-    
-    override func willMove(from view: SKView) {
-        for trackingArea in view.trackingAreas {
-            view.removeTrackingArea(trackingArea)
-        }
-    }
-    
-    func loadButtons(){
-        for btnName in buttonsInScene{
-            if let btn = self.childNode(withName: btnName) as? Button {
-                btn.setHoverTrackingArea()
-            }
-        }
-        if let btn = self.childNode(withName: "Menu/StartBtn") as? Button {
-            btn.setClickFunction {
-                print("Start click")
-            }
-        }
-        
     }
 }

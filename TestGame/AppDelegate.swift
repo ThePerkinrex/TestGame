@@ -8,6 +8,7 @@
 
 
 import Cocoa
+import SpriteKit
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -22,4 +23,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     
+}
+
+extension SKScene {
+    func changeToScene(fileNamed filename : String){
+        changeToScene(SKScene(fileNamed: filename))
+    }
+    
+    func changeToScene(_ scene : SKScene?){
+        if let sceneLoaded = scene {
+            // Set the scale mode to scale to fit the window
+            sceneLoaded.scaleMode = .aspectFill
+            
+            // Present the scene
+            self.view?.presentScene(sceneLoaded)
+        }
+    }
 }
